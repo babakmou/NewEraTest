@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewEra Ex 2 Step 1</title>
+</head>
+
+<body>
+    <p>Add the fruits(apples and oranges) to the cart: <input type="text" id="fruits" /></p>
+    <br>
+    <p><input type="button" id="calculate" value="Calculate" /></p>
+    <br>
+    <p>The total of cost is : $<span id="cost"></span></p>
+
+    <script>
+
+        let calculate = function () {
+            const fruitList = document.getElementById("fruits").value.split(' ');
+            cost = calculateCost(fruitList);
+
+            document.getElementById("cost").innerText = cost;
+
+        }
+        let calculateCost = (fruitList) => {
+            let fruit = {
+                apple: 0,
+                orange: 0
+            }
+
+            const applePrice = 0.60;
+            const orangePrice = 1.25;
+
+            fruitList.forEach(element => {
+                if (element.toLowerCase() === 'apple')
+                    fruit.apple++;
+                else
+                    fruit.orange++;
+            });
+            return fruit.apple * applePrice + fruit.orange * orangePrice;
+        }
+
+        document.getElementById("calculate").onclick = calculate;
+
+        //Test cases
+        console.log('writes an error message to the console if the assertion is false');
+
+        console.log('Test case: apple apple orange apple')
+        console.assert(calculateCost('apple apple orange apple'.split(' ')) === 3.05);
+
+        console.log('Test case: apple orange orange apple')
+        console.assert(calculateCost('apple orange orange apple'.split(' ')) === 3.7);
+
+    </script>
+</body>
+
+</html>

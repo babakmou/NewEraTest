@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewEra Ex 1</title>
+</head>
+
+<body>
+    <p>Enter a number: <input type="text" id="numIn" /></p>
+    <br>
+    <p><input type="button" id="find" value="Find" /></p>
+    <br>
+    <p>The next biggest possible number is : <span id="numOut"></span></p>
+
+    <script>
+
+        let find = function () {
+            const numIn = document.getElementById("numIn").value;
+            const numbers = numIn.split('');
+            let numOut = findNext(numbers);
+
+            document.getElementById("numOut").innerText = numOut;
+
+            //Test cases
+            console.log('writes an error message to the console if the assertion is false');
+
+            console.log('Test case: 1234')
+            console.assert(numOut === '1243');
+
+            console.log('Test case: 4321')
+            console.assert(numOut === '4321');
+
+            console.log('Test case: 567842')
+            console.assert(numOut === '568247');
+
+        }
+
+        let findNext = function (numbers) {
+            let index = checkDescending(numbers);
+
+            if (index == -1)
+                numOut = numIn;
+            else {
+                swapDigit(numbers, index, replacementIndex(numbers, index));
+
+                numOut = numbers.slice(0, index + 1).join('') + numbers.slice(index + 1).sort((a, b) => a - b).join('');
+            }
+            return numOut;
+        }
+
+        let swapDigit = function (numArray, i1, i2) {
+            let temp = numArray[i1];
+            numArray[i1] = numArray[i2];
+            numArray[i2] = temp;
+        };
+
+        let checkDescending = function (numArray) {
+            for (let i = numArray.length - 1; i > 0; i--) {
+                if (numArray[i] > numArray[i - 1])
+                    return i - 1;
+            }
+            return -1;
+        };
+
+        let replacementIndex = function (numArray, idx) {
+            newArray = numArray.slice(idx + 1).sort((a, b) => a - b);
+            for (let i = 0; i < newArray.length; i++) {
+                if (newArray[i] > numArray[idx]) {
+                    return numArray.indexOf(newArray[i]);
+                }
+            }
+        };
+
+
+
+        document.getElementById("find").onclick = find;
+
+    </script>
+</body>
+
+</html>
